@@ -12,7 +12,18 @@ import UIKit
      let lessonLabel : UILabel = {
          let label = UILabel()
          label.text = "Давай сконцентрируемся"
-         label.font = UIFont.boldSystemFont(ofSize: 25)
+         label.font = UIFont.boldSystemFont(ofSize: 20)
+         label.textColor = .black
+         label.numberOfLines = 0
+         label.textAlignment = .center
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+     }()
+        
+     let numberLabel : UILabel = {
+         let label = UILabel()
+         label.text = "10"
+         label.font = UIFont.boldSystemFont(ofSize: 55)
          label.textColor = .black
          label.numberOfLines = 0
          label.textAlignment = .center
@@ -27,7 +38,7 @@ import UIKit
          return imageView
      }()
 
-     let startButton : UIButton = {
+     @objc let startButton : UIButton = {
          let button = UIButton()
          button.layer.cornerRadius = 20
          button.setTitle("Начнем", for: .normal)
@@ -39,18 +50,34 @@ import UIKit
 
      let timerLabel : UILabel = {
          let label = UILabel()
-         label.text = ""
+         label.text = "10"
          label.font = UIFont.boldSystemFont(ofSize: 84)
          label.translatesAutoresizingMaskIntoConstraints = false
          return label
      }()
+     
+     var timer = Timer()
+     var durationTimer = 10
+     
 
      override func viewDidLoad() {
          super.viewDidLoad()
 
          view.backgroundColor = .white
-
+         
          setConstraints()
+         startButton.addTarget(self, action: #selector(getter: startButton), for: .touchUpInside)
+     }
+     
+     @objc func actionButton() {
+         
+         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+     }
+     
+     @objc func timerAction() {
+         
+         durationTimer -= 1
+         numberLabel.text = "\(durationTimer)"
      }
  }
 
@@ -60,7 +87,7 @@ import UIKit
 
          view.addSubview(lessonLabel)
          NSLayoutConstraint.activate([
-             lessonLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+             lessonLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 110),
              lessonLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
              lessonLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
          ])
@@ -79,6 +106,12 @@ import UIKit
          addImage.widthAnchor.constraint(equalToConstant: 200),
          addImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
          addImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+         ])
+         
+         addImage.addSubview(numberLabel)
+         NSLayoutConstraint.activate([
+            numberLabel.centerXAnchor.constraint(equalTo: addImage.centerXAnchor),
+            numberLabel.centerYAnchor.constraint(equalTo: addImage.centerYAnchor),
          ])
     }
  }
