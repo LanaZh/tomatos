@@ -75,8 +75,8 @@ import UIKit
          
          view.addSubview(addImage)
          NSLayoutConstraint.activate([
-         addImage.heightAnchor.constraint(equalToConstant: 300),
-         addImage.widthAnchor.constraint(equalToConstant: 300),
+         addImage.heightAnchor.constraint(equalToConstant: 200),
+         addImage.widthAnchor.constraint(equalToConstant: 200),
          addImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
          addImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
          ])
