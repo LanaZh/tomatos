@@ -8,7 +8,7 @@
 import UIKit
 
  class ViewController: UIViewController {
-     
+              
 
      let lessonLabel : UILabel = {
          let label = UILabel()
@@ -21,10 +21,10 @@ import UIKit
          return label
      }()
         
-     let numberLabel : UILabel = {
+     var workTimeLabel : UILabel = {
          let label = UILabel()
-         label.text = "10"
          label.font = UIFont.boldSystemFont(ofSize: 55)
+         label.text = "1"
          label.textColor = .black
          label.numberOfLines = 0
          label.textAlignment = .center
@@ -39,6 +39,8 @@ import UIKit
          return imageView
      }()
 
+
+     
      @objc let startButton : UIButton = {
          let button = UIButton()
          button.layer.cornerRadius = 20
@@ -47,28 +49,21 @@ import UIKit
          button.translatesAutoresizingMaskIntoConstraints = false
          return button
      }()
-     
 
-     let timerLabel : UILabel = {
-         let label = UILabel()
-         label.text = "10"
-         label.font = UIFont.boldSystemFont(ofSize: 84)
-         label.translatesAutoresizingMaskIntoConstraints = false
-         return label
-     }()
-     
+
      var timer = Timer()
      var durationTimer = 10
-     
 
      override func viewDidLoad() {
          super.viewDidLoad()
-
+     
          view.backgroundColor = .white
-         
+    
          setConstraints()
          startButton.addTarget(self, action: #selector(getter: startButton), for: .touchUpInside)
      }
+     
+     
      
      @objc func actionButton() {
          
@@ -78,15 +73,16 @@ import UIKit
      @objc func timerAction() {
          
          durationTimer -= 1
-         numberLabel.text = "\(durationTimer)"
+         workTimeLabel.text = "\(durationTimer)"
+         print(durationTimer)
          
          if durationTimer == 0 {
              timer.invalidate()
+            
          }
-                
-     }
- }
-
+    }
+}
+ 
  extension ViewController {
 
      func setConstraints() {
@@ -114,10 +110,10 @@ import UIKit
          addImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
          ])
          
-         addImage.addSubview(numberLabel)
+         addImage.addSubview(workTimeLabel)
          NSLayoutConstraint.activate([
-            numberLabel.centerXAnchor.constraint(equalTo: addImage.centerXAnchor),
-            numberLabel.centerYAnchor.constraint(equalTo: addImage.centerYAnchor),
+            workTimeLabel.centerXAnchor.constraint(equalTo: addImage.centerXAnchor),
+            workTimeLabel.centerYAnchor.constraint(equalTo: addImage.centerYAnchor),
          ])
     }
  }
