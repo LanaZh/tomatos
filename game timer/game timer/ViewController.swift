@@ -8,6 +8,7 @@
 import UIKit
 
  class ViewController: UIViewController {
+     
 
      let lessonLabel : UILabel = {
          let label = UILabel()
@@ -78,6 +79,11 @@ import UIKit
          
          durationTimer -= 1
          numberLabel.text = "\(durationTimer)"
+         
+         if durationTimer == 0 {
+             timer.invalidate()
+         }
+                
      }
  }
 
