@@ -66,31 +66,28 @@ import UIKit
          timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
      }
      
-     var durationTimer = 1500.0
+     var durationTimer = 1500
      
      @objc func timerAction() {
          
-         durationTimer -= 0.5
          let seconds1 = Int(durationTimer) % 60
          let minutes1 = Int(durationTimer) / 60 % 60
-         
+         durationTimer -= 1
          workTimeLabel.text = ("\(minutes1):\(seconds1)")
          
          if durationTimer == 0 {
              timer.invalidate()
              durationTimer = 300
              durationTimer -= 1
-             workTimeLabel.text = "\(durationTimer)"
+            workTimeLabel.text = ("\(minutes1):\(seconds1)")
          }
      }
  }
 
-var durationTimer = 1500.0
-
+var durationTimer = 1500
      private func createTimeFormated() -> String {
      let seconds = Int(durationTimer) % 60
      let minutes = Int(durationTimer) / 60 % 60
-         
      return String(format: "\(minutes):\(seconds)")
 }
  
