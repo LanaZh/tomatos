@@ -1,0 +1,127 @@
+//
+//  ViewController.swift
+//  game timer
+//
+//  Created by Надежда Жукова on 29.05.2022.
+//
+
+import UIKit
+
+ class ViewController: UIViewController {
+              
+
+     let lessonLabel : UILabel = {
+         let label = UILabel()
+         label.text = "Давай сконцентрируемся"
+         label.font = UIFont.boldSystemFont(ofSize: 20)
+         label.textColor = .black
+         label.numberOfLines = 0
+         label.textAlignment = .center
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+     }()
+        
+     var workTimeLabel : UILabel = {
+         let label = UILabel()
+         label.font = UIFont.boldSystemFont(ofSize: 30)
+         label.text = createTimeFormated()
+         label.textColor = .black
+         label.numberOfLines = 0
+         label.textAlignment = .center
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+     }()
+     
+     let addImage : UIImageView = {
+         let imageView = UIImageView()
+         imageView.image = UIImage(named: "timer")
+         imageView.translatesAutoresizingMaskIntoConstraints = false
+         return imageView
+     }()
+
+     
+     @objc let startButton : UIButton = {
+         let button = UIButton()
+         button.layer.cornerRadius = 20
+         button.setTitle("Начнем", for: .normal)
+         button.backgroundColor = .black
+         button.translatesAutoresizingMaskIntoConstraints = false
+         return button
+     }()
+     
+     var timer = Timer()
+        
+     override func viewDidLoad() {
+         super.viewDidLoad()
+     
+         view.backgroundColor = .white
+    
+         setConstraints()
+         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+     }
+     
+
+     @objc func startButtonTapped() {
+         
+         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+     }
+     
+     var durationTimer = 1500
+     
+     @objc func timerAction() {
+         
+         let seconds1 = Int(durationTimer) % 60
+         let minutes1 = Int(durationTimer) / 60 % 60
+         durationTimer -= 1
+         workTimeLabel.text = ("\(minutes1):\(seconds1)")
+         
+         if durationTimer == 0 {
+             timer.invalidate()
+             durationTimer = 300
+             durationTimer -= 1
+            workTimeLabel.text = ("\(minutes1):\(seconds1)")
+         }
+     }
+ }
+
+var durationTimer = 1500
+     private func createTimeFormated() -> String {
+     let seconds = Int(durationTimer) % 60
+     let minutes = Int(durationTimer) / 60 % 60
+     return String(format: "\(minutes):\(seconds)")
+}
+ 
+ extension ViewController {
+
+     func setConstraints() {
+
+         view.addSubview(lessonLabel)
+         NSLayoutConstraint.activate([
+             lessonLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 110),
+             lessonLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+             lessonLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+         ])
+
+         view.addSubview(startButton)
+         NSLayoutConstraint.activate([
+             startButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+             startButton.heightAnchor.constraint(equalToConstant: 70),
+             startButton.widthAnchor.constraint(equalToConstant: 300)
+         ])
+         
+         view.addSubview(addImage)
+         NSLayoutConstraint.activate([
+         addImage.heightAnchor.constraint(equalToConstant: 200),
+         addImage.widthAnchor.constraint(equalToConstant: 200),
+         addImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+         addImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+         ])
+         
+         addImage.addSubview(workTimeLabel)
+         NSLayoutConstraint.activate([
+            workTimeLabel.centerXAnchor.constraint(equalTo: addImage.centerXAnchor),
+            workTimeLabel.centerYAnchor.constraint(equalTo: addImage.centerYAnchor),
+         ])
+    }
+ }
