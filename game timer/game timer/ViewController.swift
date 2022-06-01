@@ -23,8 +23,8 @@ import UIKit
         
      var workTimeLabel : UILabel = {
          let label = UILabel()
-         label.font = UIFont.boldSystemFont(ofSize: 55)
-         label.text = "1"
+         label.font = UIFont.boldSystemFont(ofSize: 30)
+         label.text = createTimeFormated()
          label.textColor = .black
          label.numberOfLines = 0
          label.textAlignment = .center
@@ -39,7 +39,6 @@ import UIKit
          return imageView
      }()
 
-
      
      @objc let startButton : UIButton = {
          let button = UIButton()
@@ -49,38 +48,50 @@ import UIKit
          button.translatesAutoresizingMaskIntoConstraints = false
          return button
      }()
-
-
+     
      var timer = Timer()
-     var durationTimer = 10
-
+        
      override func viewDidLoad() {
          super.viewDidLoad()
      
          view.backgroundColor = .white
     
          setConstraints()
-         startButton.addTarget(self, action: #selector(getter: startButton), for: .touchUpInside)
+         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
      }
      
-     
-     
-     @objc func actionButton() {
+
+     @objc func startButtonTapped() {
          
          timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
      }
      
+     var durationTimer = 1500.0
+     
      @objc func timerAction() {
          
-         durationTimer -= 1
-         workTimeLabel.text = "\(durationTimer)"
-         print(durationTimer)
+         durationTimer -= 0.5
+         let seconds1 = Int(durationTimer) % 60
+         let minutes1 = Int(durationTimer) / 60 % 60
+         
+         workTimeLabel.text = ("\(minutes1):\(seconds1)")
          
          if durationTimer == 0 {
              timer.invalidate()
-            
+             durationTimer = 300
+             durationTimer -= 1
+             workTimeLabel.text = "\(durationTimer)"
          }
-    }
+     }
+ }
+
+var durationTimer = 1500.0
+
+     private func createTimeFormated() -> String {
+     let seconds = Int(durationTimer) % 60
+     let minutes = Int(durationTimer) / 60 % 60
+         
+     return String(format: "\(minutes):\(seconds)")
 }
  
  extension ViewController {
